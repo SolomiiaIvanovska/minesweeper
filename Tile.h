@@ -21,7 +21,26 @@ public:
     bool getRevealed() const { return isRevealed; }
     bool getFlagged() const { return isFlagged; }
 
-    void reveal(sf::Texture& revealedTex, sf::Texture* numberTextures[8], sf::Texture& mineTex);
-    void toggleFlag(sf::Texture& flagTex, sf::Texture& hiddenTex);
+    // Normal reveal (numbers / empty / mine)
+    void reveal(sf::Texture& revealedTex,
+                sf::Texture* numberTextures[8],
+                sf::Texture& mineTex);
+
+    // Used when the player loses to show all mines
+    void revealMine(sf::Texture& mineTex);
+
+    // Toggle flag; returns +1 if a flag was added, -1 if removed, 0 if no change
+    int toggleFlag(sf::Texture& flagTex, sf::Texture& hiddenTex);
+
+    // For pause/leaderboard: temporarily show as revealed gray tile
+    void showAsTempRevealed(sf::Texture& revealedTex);
+
+    // Restore sprite texture based on current state flags
+    void refreshSprite(sf::Texture& hiddenTex,
+                       sf::Texture& revealedTex,
+                       sf::Texture* numberTextures[8],
+                       sf::Texture& mineTex,
+                       sf::Texture& flagTex);
+
     void draw(sf::RenderWindow& window);
 };
